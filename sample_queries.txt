@@ -1,0 +1,105 @@
+% Sample Queries for Family Tree Prolog Program
+% This file demonstrates various queries you can run with the family tree implementation
+
+% Basic relationship queries
+
+% 1. Find all parents in the family tree
+?- parent(X, Y).
+% Expected results: All parent-child pairs defined in the knowledge base
+
+% 2. Find Mary's children
+?- child(X, mary).
+% Expected results: X = ann ; X = steve
+
+% 3. Find who is James' father
+?- father(X, james).
+% Expected results: X = john
+
+% 4. Find all mothers in the family tree
+?- mother(X, _).
+% Expected results: X = susan ; X = mary ; X = patricia
+
+% 5. Find all of Susan's daughters
+?- daughter(X, susan).
+% Expected results: X = mary
+
+% Extended family relationships
+
+% 6. Find Jennifer's grandparents
+?- grandparent(X, jennifer).
+% Expected results: X = james ; X = mary ; X = john ; X = susan
+
+% 7. Find all grandfathers
+?- grandfather(X, Y).
+% Expected results: Multiple solutions showing all grandfather-grandchild relationships
+
+% 8. Find all siblings of Mary
+?- sibling(X, mary).
+% Expected results: X = james
+
+% 9. Find all brothers in the family
+?- brother(X, _).
+% Expected results: X = james ; X = steve ; X = michael ; X = robert
+
+% 10. Find Patricia's cousins
+?- cousin(X, patricia).
+% Expected results: X = ann ; X = steve
+
+% Recursive relationship queries
+
+% 11. Find all ancestors of Jennifer
+?- ancestor(X, jennifer).
+% Expected results: X = patricia ; X = james ; X = mary ; X = john ; X = susan
+
+% 12. Find all descendants of John
+?- descendant(X, john).
+% Expected results: X = mary ; X = james ; X = ann ; X = steve ; X = patricia ; X = michael ; X = jennifer ; X = robert ; X = lisa
+
+% Compound queries (using AND, OR)
+
+% 13. Find all males who are also parents
+?- male(X), parent(X, _).
+% Expected results: X = john ; X = james ; X = michael
+
+% 14. Find all females who are grandparents
+?- female(X), grandparent(X, _).
+% Expected results: X = susan ; X = mary
+
+% Variable-free queries (testing if a specific relationship exists)
+
+% 15. Is John the grandfather of Patricia?
+?- grandfather(john, patricia).
+% Expected results: true
+
+% 16. Is Ann a cousin of Michael?
+?- cousin(ann, michael).
+% Expected results: false
+
+% Finding all solutions with findall/3
+
+% 17. Find all children of Mary and count them
+?- findall(X, child(X, mary), Children), length(Children, Count).
+% Expected results: Children = [ann, steve], Count = 2
+
+% 18. List all descendants of John
+?- findall(X, descendant(X, john), Descendants).
+% Expected results: Descendants = [mary, james, ann, steve, patricia, michael, jennifer, robert, lisa]
+
+% Negation queries (using not/1)
+
+% 19. Find all people who are not parents
+?- member(X, [john, susan, mary, james, ann, steve, patricia, michael, jennifer, robert, lisa]), not(parent(X, _)).
+% Expected results: X = ann ; X = steve ; X = jennifer ; X = robert ; X = lisa
+
+% 20. Find siblings who don't have children
+?- sibling(X, _), not(parent(X, _)).
+% Expected results: X = ann ; X = steve
+
+% How to run these queries:
+% 1. Load your family_tree.pl file in a Prolog interpreter (e.g., SWI-Prolog)
+%    ?- [family_tree].
+% 2. Type any of the above queries at the Prolog prompt
+% 3. Press Enter to see the first solution
+% 4. Press ; (semicolon) to see alternative solutions
+% 5. Press a (for all) to see all solutions at once
+% 6. Press Enter after the last solution or press q to quit the current query
